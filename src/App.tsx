@@ -4,18 +4,35 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
+import DeafultLayout from "./layouts/DeafultLayout";
+import AboutUs from "./pages/AboutUs";
+import Pricing from "./pages/Pricing";
+import DashboardLayout from "./layouts/DashboardLayout";
 
 const router = createBrowserRouter([
-  { path: "/", element: <LandingPage /> },
-  { path: "/login", element: <Login /> },
   {
-    path: "/dashboard",
+    path: "/",
+    element: <DeafultLayout />,
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: "about", element: <AboutUs /> },
+      { path: "pricing", element: <Pricing /> },
+      
+    ],
+  },
+  { path: "login", element: <Login /> },
+  {
+    path: "dashboard",
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <DashboardLayout />
       </ProtectedRoute>
     ),
+    children: [
+      {index: true, element: <Dashboard/>}
+    ]
   },
+
 ]);
 
 function App() {
