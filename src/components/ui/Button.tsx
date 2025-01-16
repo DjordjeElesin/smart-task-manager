@@ -22,7 +22,7 @@ export default function Button({
   return (
     <button
       className={mergeClassNames(
-        "relative flex items-center text-center text-neutral-50 rounded-3xl overflow-hidden transition-all duration-300 text-nowrap font-semibold group",
+        "relative flex items-center justify-center text-neutral-50 rounded-3xl overflow-hidden transition-all duration-300 text-nowrap font-semibold group",
         {
           "px-4 py-1": size === "sm",
           "px-6 py-3": size === "md",
@@ -42,7 +42,7 @@ export default function Button({
       )}
       {...props}
     >
-      <span className="relative z-10">{children}</span>
+      <div className="relative z-10">{children}</div>
     </button>
   );
 }

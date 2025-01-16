@@ -7,6 +7,7 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> & {
   isInvalid?: boolean;
   labelText?: string;
   className?: string;
+  width?: string
 };
 
 export default function Input({
@@ -16,10 +17,11 @@ export default function Input({
   labelText,
   className,
   disabled,
+  width="100%",
   ...props
 }: InputProps) {
   return (
-    <div>
+    <div style={{width}}>
       <div className="relative">
         {Icon && (
           <span className="text-neutral-400 absolute right-0 px-4 z-10 -translate-y-1/2 top-1/2">
@@ -28,7 +30,7 @@ export default function Input({
         )}
         <input
           className={mergeClassNames(
-            "rounded-lg border-2 border-neutral-400 drop-shadow-md w-full outline-none px-3 text-neutral-900 placeholder:text-neutral-300 focus:ring-4 focus:ring-neutral-900/20",
+            "rounded-3xl border-2 border-neutral-300 bg-primary-50 drop-shadow-md w-full outline-none px-4 text-neutral-900 placeholder:text-neutral-300 focus:ring-2 focus:ring-neutral-600/20",
             {
               "h-9": size === "sm",
               "h-12": size === "md",
@@ -40,7 +42,8 @@ export default function Input({
             },
             {
               "pr-10": Icon,
-            }
+            },
+            className
           )}
           {...props}
         />

@@ -8,6 +8,7 @@ import DeafultLayout from "./layouts/DeafultLayout";
 import AboutUs from "./pages/AboutUs";
 import Pricing from "./pages/Pricing";
 import DashboardLayout from "./layouts/DashboardLayout";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,13 @@ function App() {
   return (
     <FirebaseProvider>
       <RouterProvider router={router} />
+      <ToastContainer 
+        pauseOnFocusLoss
+        pauseOnHover
+        position="top-right"
+        newestOnTop
+        draggable
+      />
     </FirebaseProvider>
   );
 }
