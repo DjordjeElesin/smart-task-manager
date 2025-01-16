@@ -22,14 +22,14 @@ export default function Button({
   return (
     <button
       className={mergeClassNames(
-        "relative text-center text-neutral-50 rounded-3xl overflow-hidden transition-all duration-300 text-nowrap font-semibold group",
+        "relative flex items-center text-center text-neutral-50 rounded-3xl overflow-hidden transition-all duration-300 text-nowrap font-semibold group",
         {
-          "px-3 py-1": size === "sm",
+          "px-4 py-1": size === "sm",
           "px-6 py-3": size === "md",
           "px-8 py-4": size === "lg",
         },
         {
-          "bg-gradient-to-br from-primary-500 to-primary-950 border-t-2 border-primary-300 before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300 before:bg-gradient-to-b before:from-primary-900 before:via-primary-600 before:to-primary-500 hover:before:opacity-100 hover:shadow-xl hover:shadow-primary-600/40 focus:ring-4 focus:ring-primary-500/50":
+          "bg-primary-600 border-t-2 border-primary-300 before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300 before:bg-gradient-to-b before:from-primary-500 before:via-primary-600 before:to-primary-800 hover:before:opacity-100 hover:shadow-xl hover:shadow-primary-600/40 focus:ring-4 focus:ring-primary-500/50":
             variant === "primary",
           "bg-gradient-to-br from-neutral-700 to-neutral-900 border-t-2 border-neutral-600 before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300 before:bg-gradient-to-br before:from-neutral-600 before:to-neutral-800 hover:before:opacity-100 hover:shadow-lg hover:shadow-neutral-800/50 focus:ring-4 focus:ring-neutral-500/50":
             variant === "secondary",
