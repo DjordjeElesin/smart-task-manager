@@ -23,12 +23,16 @@ type FirebaseValueType = {
   googleProvider: GoogleAuthProvider;
 };
 
+const auth = getAuth(app)
+
 const firebaseValue: FirebaseValueType = {
   analytics: getAnalytics(app),
-  auth: getAuth(app),
+  auth: auth,
   firestore: getFirestore(app),
   googleProvider: new GoogleAuthProvider(),
 };
+
+export {auth}
 
 const FirebaseContext = createContext<FirebaseValueType | null>(null);
 

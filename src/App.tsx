@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import Pricing from "./pages/Pricing";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { ToastContainer } from "react-toastify";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
     ],
   },
   { path: "login", element: <Login /> },
+  { path: "signup", element: <SignUp /> },
   {
     path: "dashboard",
     element: (
