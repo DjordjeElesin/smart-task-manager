@@ -61,7 +61,7 @@ export default function Navbar({ items, className }: NavbarProps) {
           );
         })}
         <Link to="/login" className="ml-10">
-          <Button className="h-9 md:h-10 text-sm">Login</Button>
+          <Button className="h-9 md:h-10 text-sm">Sign In/Up</Button>
         </Link>
       </div>
     </div>
