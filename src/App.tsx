@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import DeafultLayout from "./layouts/DeafultLayout";
 import AboutUs from "./pages/AboutUs";
-import Pricing from "./pages/Pricing";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { ToastContainer } from "react-toastify";
 import SignUp from "./pages/SignUp";
@@ -18,8 +17,6 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: "about", element: <AboutUs /> },
-      { path: "pricing", element: <Pricing /> },
-      
     ],
   },
   { path: "login", element: <Login /> },

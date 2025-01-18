@@ -1,5 +1,5 @@
 import React from "react";
-import { mergeClassNames } from "../../utils/StyleHelper";
+import { mergeClassNames } from "../../lib/utils/StyleHelper";
 
 type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> & {
   size?: "sm" | "md" | "lg";
