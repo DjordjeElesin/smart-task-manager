@@ -7,12 +7,20 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 //firebase
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup, validatePassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithPopup,
+  validatePassword,
+} from "firebase/auth";
 import useFirebase from "../hooks/useFirebase";
+import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 //toast
 import { toast } from "react-toastify";
 import { LoadingDots } from "../components/ui/LoadingDots";
-import { checkPassword } from "../utils/SignUpHelper";
+import { checkPassword } from "../lib/utils/SignUpHelper";
+
+//users collection
 
 type SignUpDataType = {
   email: string;
@@ -42,13 +50,15 @@ export default function SignUp() {
   const [signUpErrors, setSignUpErrors] =
     useState<SignUpErrorsType>(initialSignUpData);
 
-  const { auth, googleProvider } = useFirebase();
+  const { auth, googleProvider, firestoredb } = useFirebase();
+  const usersCollectionRef = collection(firestoredb, "users");
+
   const navigation = useNavigate();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        /* navigation("/dashboard", { replace: true }); */
+        navigation("/dashboard", { replace: true });
       }
       setIsLoadingUser(false);
     });
@@ -86,10 +96,10 @@ export default function SignUp() {
       newErrors.email = "Please input a valid email address";
     }
 
-    const passwordError = await checkPassword(signUpData.password)
-    if(passwordError){
-      newErrors.password = passwordError
-    }    
+    const passwordError = await checkPassword(signUpData.password);
+    if (passwordError) {
+      newErrors.password = passwordError;
+    }
 
     if (!signUpData.confirmPassword) {
       newErrors.confirmPassword = "Confirm password is required";
@@ -113,8 +123,16 @@ export default function SignUp() {
         signUpData.email,
         signUpData.password
       );
-
-      await sendEmailVerification(userCredentials.user)
+      const user = userCredentials.user;
+      await setDoc(doc(firestoredb, "users", user.uid), {
+        userId: user.uid,
+        name: user.displayName || "User",
+        email: user.email,
+        photoURL: user.photoURL || "/empty-profile.png",
+        createdAt: new Date(),
+        emailVerified: user.emailVerified,
+      });
+      await sendEmailVerification(user);
       navigation("/dashboard", { replace: true });
     } catch (error: any) {
       setIsLoading(false);
@@ -124,21 +142,18 @@ export default function SignUp() {
           ...prev,
           email: "Email is already in use",
         }));
-      }
-      else if (error.code === "auth/invalid-email") {
+      } else if (error.code === "auth/invalid-email") {
         setSignUpErrors((prev) => ({
           ...prev,
           email: "Email address is invalid",
         }));
-      }
-      else if (error.code === "auth/weak-password") {
+      } else if (error.code === "auth/weak-password") {
         setSignUpErrors((prev) => ({
           ...prev,
           password: "Password is too weak",
         }));
-      }
-      else{
-        console.log(error.code)
+      } else {
+        console.log(error.code);
       }
     } finally {
       setIsLoading(false);
@@ -147,7 +162,20 @@ export default function SignUp() {
 
   const handleSignInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const userCredentials = await signInWithPopup(auth, googleProvider);
+      const user = userCredentials.user;
+      const userDoc = await getDoc(doc(firestoredb, "users", user.uid));
+
+      if (!userDoc.exists()) {
+        await setDoc(doc(firestoredb, "users", user.uid), {
+          userId: user.uid,
+          name: user.displayName || "User",
+          email: user.email,
+          photoURL: user.photoURL || "/empty-profile.png",
+          createdAt: new Date(),
+          emailVerified: user.emailVerified,
+        });
+      }
       navigation("/dashboard", { replace: true });
     } catch (error) {
       console.error(error);
@@ -160,7 +188,10 @@ export default function SignUp() {
       <div className="form flex flex-col gap-6 w-full md:shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.1)] rounded-3xl md:w-[350px] p-6">
         <div className="flex flex-col items-center gap-4">
           <Link className="h-14" to="/">
-            <img src="icon.svg" className="h-full object-contain" />
+            <img
+              src="logos/logoDefault.svg"
+              className="h-full object-contain"
+            />
           </Link>
           <h1 className="text-3xl font-bold text-neutral-800">
             Create an account

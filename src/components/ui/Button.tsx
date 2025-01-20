@@ -1,4 +1,4 @@
-import { mergeClassNames } from "../../utils/StyleHelper";
+import { mergeClassNames } from "../../lib/utils/StyleHelper";
 
 type ButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

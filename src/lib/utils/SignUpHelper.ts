@@ -1,5 +1,5 @@
 import { validatePassword } from "firebase/auth"
-import { auth } from "../context/FirebaseProvider"
+import { auth } from "../../context/FirebaseProvider"
 
 const checkPassword = async (password: string) => {
   const passwordStatus = await validatePassword(auth, password)

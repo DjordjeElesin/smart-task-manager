@@ -104,6 +104,9 @@ export default function Login() {
       if(error.code === "auth/invalid-credential"){
         setLoginErrors(prev => ({...prev, password: "Wrong password"}))
       }
+      else{
+        toast.error("Unexpected error occurred. Please try again...")
+      }
       console.error(error.code);
     }
     finally{
@@ -126,7 +129,7 @@ export default function Login() {
       <div className="form flex flex-col gap-6 w-full md:shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.1)] rounded-3xl md:w-[350px] p-6">
         <div className="flex flex-col items-center gap-4">
           <Link className="h-14" to="/">
-            <img src="icon.svg" className="h-full object-contain" />
+            <img src="logos/logoDefault.svg" className="h-full object-contain" />
           </Link>
           <h1 className="text-3xl font-bold text-neutral-800">Welcome Back</h1>
           <p>
