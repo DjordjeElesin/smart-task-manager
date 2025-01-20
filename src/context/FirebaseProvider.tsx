@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 type FirebaseValueType = {
   analytics: Analytics;
   auth: Auth;
-  firestore: Firestore;
+  firestoredb: Firestore;
   googleProvider: GoogleAuthProvider;
 };
 
@@ -28,7 +28,7 @@ const auth = getAuth(app)
 const firebaseValue: FirebaseValueType = {
   analytics: getAnalytics(app),
   auth: auth,
-  firestore: getFirestore(app),
+  firestoredb: getFirestore(app),
   googleProvider: new GoogleAuthProvider(),
 };
 

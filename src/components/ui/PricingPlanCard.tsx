@@ -26,6 +26,7 @@ export default function PricingPlanCard({ plan }: { plan: PricingPlanType }) {
               "flex items-center gap-2 space-y-2.5",
               !value && "text-neutral-900/50"
             )}
+            key={key}
           >
             <span className="w-5 h-5">
               {value ? <Check size={20} /> : <X />}
