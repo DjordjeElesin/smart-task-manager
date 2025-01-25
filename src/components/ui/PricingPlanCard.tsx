@@ -1,5 +1,5 @@
 import { Check, X } from "@phosphor-icons/react";
-import { PricingPlanType } from "../../lib/types/LandingPageTypes";
+import { PricingPlanType } from "../../lib/types/Types";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import { mergeClassNames } from "../../lib/utils/StyleHelper";

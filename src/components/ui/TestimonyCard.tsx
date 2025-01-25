@@ -1,17 +1,8 @@
 import { Quotes, Star } from "@phosphor-icons/react";
 import { mergeClassNames } from "../../lib/utils/StyleHelper";
+import { TestimonyType } from "../../lib/types/Types";
 
-type PersonType = {
-  name: string,
-  image: string,
-  job: string
-}
 
-export type TestimonyType = {
-  person: PersonType
-  quote: string;
-  rating: 1 | 2 | 3 | 4 | 5;
-};
 
 type TestimonyCardProps = {
   testimony: TestimonyType;

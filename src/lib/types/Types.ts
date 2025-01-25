@@ -1,4 +1,5 @@
 import { IconProps } from "@phosphor-icons/react";
+import { Timestamp } from "firebase/firestore";
 
 type FeatureType = {
   title: string;
@@ -34,8 +35,50 @@ type PlanFeaturesType = {
 type PricingPlanType = {
   plan_name: string;
   features: PlanFeaturesType;
-  price: number,
-  prev_price: number | null
+  price: number;
+  prev_price: number | null;
 };
 
-export type { FeatureType, TestimonyType, PricingPlanType, PlanFeaturesType };
+type PieDataType = {
+  id:string,
+  label: string,
+  value: number,
+}
+
+type Role = "admin" | "editor" | "viewer";
+
+type Member = {
+  userId: string,
+  name: string,
+  role: Role
+}
+
+type Project = {
+  projectId: string;
+  title: string;
+  description: string;
+  createdAt: Timestamp;
+  dueDate: Timestamp;
+  ownerId: string;
+  members: Member[]
+  status: "active" | "completed" | "on hold";
+};
+
+interface User {
+  userId: string; 
+  email: string;
+  name: string;
+  photoURL: string;
+  createdAt: Timestamp;
+  projectIds?: string[]; 
+}
+
+export type {
+  FeatureType,
+  TestimonyType,
+  PricingPlanType,
+  PlanFeaturesType,
+  User,
+  Project,
+  PieDataType
+};

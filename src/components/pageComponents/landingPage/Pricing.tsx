@@ -1,5 +1,5 @@
-import { pricingPlans } from "../../lib/utils/LandingPageHelper";
-import PricingPlanCard from "../ui/PricingPlanCard";
+import { pricingPlans } from "../../../lib/utils/LandingPageHelper";
+import PricingPlanCard from "../../ui/PricingPlanCard";
 
 export default function Pricing() {
   return (

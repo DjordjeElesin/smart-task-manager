@@ -3,7 +3,7 @@ import useFirebase from "../../hooks/useFirebase";
 import { useNavigate } from "react-router-dom";
 import { LoadingDots } from "../ui/LoadingDots";
 
-type ProtectedRouteProps = PropsWithChildren;
+type ProtectedRouteProps = PropsWithChildren<{}>;
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { auth } = useFirebase();

@@ -11,6 +11,10 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SignUp from "./pages/SignUp";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
+import Projects from "./pages/Projects";
+import Account from "./pages/Account";
+import SingleProject from "./pages/SingleProject";
+import Tasks from "./pages/Tasks";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,13 +35,19 @@ const router = createBrowserRouter([
   { path: "login", element: <Login /> },
   { path: "signup", element: <SignUp /> },
   {
-    path: "dashboard",
+    path: "/",
     element: (
       <ProtectedRoute>
         <DashboardLayout />
       </ProtectedRoute>
     ),
-    children: [{ index: true, element: <Dashboard /> }],
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "projects", element: <Projects /> },
+      { path: "tasks", element: <Tasks /> },
+      { path: "projects/:projectId", element: <SingleProject /> },
+      { path: "account/:userId", element: <Account /> },
+    ],
   },
 ]);
 
