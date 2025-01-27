@@ -40,18 +40,18 @@ type PricingPlanType = {
 };
 
 type PieDataType = {
-  id:string,
-  label: string,
-  value: number,
-}
+  id: string;
+  label: string;
+  value: number;
+};
 
 type Role = "admin" | "editor" | "viewer";
 
 type Member = {
-  userId: string,
-  name: string,
-  role: Role
-}
+  userId: string;
+  name: string;
+  role: Role;
+};
 
 type Project = {
   projectId: string;
@@ -59,18 +59,42 @@ type Project = {
   description: string;
   createdAt: Timestamp;
   dueDate: Timestamp;
-  ownerId: string;
-  members: Member[]
+  id: string;
+  members: Member[];
+  lastModified: Timestamp;
+  gradient: string;
   status: "active" | "completed" | "on hold";
 };
 
+type Priority = "Low" | "Medium" | "High";
+
+type Comment = {
+  commentId: string;
+  content: string;
+  timestamp: Timestamp;
+  userId: string;
+};
+
+type Task = {
+  assignedTo?: string[];
+  createdAt: Timestamp;
+  createdBy: string;
+  description: string;
+  dueDate: Timestamp;
+  priority: Priority;
+  projectId?: string;
+  status: "To do" | "In Progress" | "Done";
+  title: string;
+  comments?: Comment[];
+};
+
 interface User {
-  userId: string; 
+  userId: string;
   email: string;
   name: string;
   photoURL: string;
   createdAt: Timestamp;
-  projectIds?: string[]; 
+  projectIds?: string[];
 }
 
 export type {
@@ -80,5 +104,6 @@ export type {
   PlanFeaturesType,
   User,
   Project,
-  PieDataType
+  Task,
+  PieDataType,
 };

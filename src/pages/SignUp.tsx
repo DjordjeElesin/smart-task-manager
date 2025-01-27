@@ -161,7 +161,7 @@ export default function SignUp() {
           password: "Password is too weak",
         }));
       } else {
-        console.log(error.code);
+        console.error(error.code);
       }
     } finally {
       setIsLoading(false);

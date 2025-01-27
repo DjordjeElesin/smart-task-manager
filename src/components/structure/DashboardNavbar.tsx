@@ -25,7 +25,7 @@ export default function DashboardNavbar({
 
   return (
     <div className="fixed top-0 left-1/2 -translate-x-1/2 z-50 pt-4">
-      <div className="flex items-center gap-3 bg-primary-50 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+      <div className="flex items-center gap-3 bg-white border-2 border-neutral-100/80 backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
         <Link to="/dashboard" className="h-9 md:h-10 w-9 md:w-10 md:mr-5">
           <img src="/logos/logoCircle.svg" className="h-full w-full" />
         </Link>
@@ -48,7 +48,7 @@ export default function DashboardNavbar({
               {isActive(item.path) && (
                 <motion.div
                   layoutId="lamp"
-                  className="absolute inset-0 w-full bg-primary-50 rounded-full -z-10"
+                  className="absolute inset-0 w-full  rounded-full -z-10"
                   initial={false}
                   transition={{
                     type: "spring",

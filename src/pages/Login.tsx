@@ -119,7 +119,6 @@ export default function Login() {
       const user = userCredentials.user;
       const userDoc = await getDoc(doc(firestoredb, "users", user.uid));
 
-      console.log(userDoc)
 
       const avatarURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(
         user.displayName || "User"
