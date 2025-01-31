@@ -15,7 +15,7 @@ export default function TasksToComplete({
   return (
     <div className="bg-white rounded-xl  p-4 w-full text-neutral-700 flex flex-col gap-12 border-2 border-primary-100/70">
       <div className="flex items-center gap-4">
-        <span className="rounded-full p-2 bg-primary-300 text-primary-700">
+        <span className="rounded-full p-2 bg-primary-200 text-primary-700">
           <CheckSquareOffset size={20} />
         </span>
         <span className="text-md  font-semibold">Tasks to complete</span>

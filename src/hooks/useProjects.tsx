@@ -13,8 +13,8 @@ export default function useProjects(userId: string) {
       const q = query(projectsRef, where(`members.${userId}`, "!=", null));
       const querySnapshop = await getDocs(q);
       return querySnapshop.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data() as Project
+        ...doc.data() as Project,
+        id: doc.id
       }));
     },
     enabled: !!userId,

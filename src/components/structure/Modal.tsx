@@ -32,7 +32,7 @@ export default function Modal({ toggleModal, children }: ModalPropsType) {
   return (
     <Backdrop onClick={toggleModal}>
       <motion.div
-        className="rounded-xl p-3 bg-primary-50"
+        className="rounded-xl p-6 bg-white"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         variants={dropIn}
         initial="hidden"

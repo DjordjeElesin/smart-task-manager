@@ -3,7 +3,7 @@ import { mergeClassNames } from "../../lib/utils/StyleHelper";
 import { motion } from "motion/react";
 import { IconProps } from "@phosphor-icons/react";
 import useFirebase from "../../hooks/useFirebase";
-import useUser from "../../hooks/useUser";
+import useUser from "../../hooks/useUsers";
 
 type NavbarItemType = {
   name: string;
@@ -18,8 +18,10 @@ export default function DashboardNavbar({
 }) {
   const { auth } = useFirebase();
   const { data: userData } = auth?.currentUser
-    ? useUser(auth.currentUser.uid)
+    ? useUser([auth.currentUser.uid])
     : { data: null };
+
+  const [user] = userData || []
   const location = useLocation();
   const isActive = (path: string) => path === location.pathname;
 
@@ -69,7 +71,7 @@ export default function DashboardNavbar({
           className="h-9 md:h-10 w-9 md:w-10 md:ml-5 overflow-hidden"
         >
           <img
-            src={userData?.photoURL}
+            src={user?.photoURL}
             alt="user account"
             className="rounded-full object-cover"
           />

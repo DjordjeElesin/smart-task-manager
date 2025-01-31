@@ -45,12 +45,8 @@ type PieDataType = {
   value: number;
 };
 
-type Role = "admin" | "editor" | "viewer";
-
-type Member = {
-  userId: string;
-  name: string;
-  role: Role;
+type Members = {
+  [userId: string]: boolean;
 };
 
 type Project = {
@@ -58,12 +54,11 @@ type Project = {
   title: string;
   description: string;
   createdAt: Timestamp;
-  dueDate: Timestamp;
-  id: string;
-  members: Member[];
+  createdBy: string;
+  members: Members;
   lastModified: Timestamp;
   gradient: string;
-  status: "active" | "completed" | "on hold";
+  status?: "active" | "completed" | "on hold";
 };
 
 type Priority = "Low" | "Medium" | "High";

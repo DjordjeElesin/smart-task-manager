@@ -43,7 +43,7 @@ export default function Dashboard() {
         {modalType && (
           <Modal toggleModal={() => handleModal(null)}>
             {modalType === "project" ? (
-              <CreateProjectModal />
+              <CreateProjectModal toggleModal={() => handleModal(null)}/>
             ) : (
               <CreateTaskModal />
             )}

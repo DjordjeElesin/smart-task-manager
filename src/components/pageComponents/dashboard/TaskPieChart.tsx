@@ -4,6 +4,8 @@ import useUserTasks from "../../../hooks/useUserTasks";
 import { colors } from "../../../style/colors";
 import PieChart from "../../ui/PieChart";
 import Spinner from "../../ui/Spinner";
+import Button from "../../ui/Button";
+import { Plus } from "@phosphor-icons/react";
 
 export default function TaskPieChart() {
   const { auth } = useFirebase();
@@ -35,13 +37,17 @@ export default function TaskPieChart() {
     [statusCounts, tasksData]
   );
 
+  const checkTaskDataLength = () => {
+    return !statusData.every((status) => status.value === 0);
+  };
+
   return (
     <div className="bg-white rounded-xl row-span-2 flex flex-col gap-2 p-5 w-full border-2 border-primary-100/70">
       <h1 className="text-lg font-semibold text-neutral-700">Tasks</h1>
       <div className="h-72 w-full flex items-center justify-center p-7">
         {isLoading ? (
-          <Spinner size="40px"/>
-        ) : (
+          <Spinner size="40px" />
+        ) : checkTaskDataLength() ? (
           <PieChart
             data={statusData}
             padColors={[
@@ -66,6 +72,14 @@ export default function TaskPieChart() {
               ],
             }}
           />
+        ) : (
+          <div className="h-60 flex flex-col items-center justify-center gap-6 p-6 w-full rounded-xl bg-primary-100 text-primary-700/60 text-center">
+            <span className=" font-semibold">No tasks found</span>
+            <span className="text-sm">It seems there are no tasks created yet</span>
+            <span className="border-2 border-primary-700/50 rounded-full p-3">
+              <Plus size={30}/>
+            </span>
+          </div>
         )}
       </div>
     </div>

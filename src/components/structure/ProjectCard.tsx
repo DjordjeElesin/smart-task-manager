@@ -10,20 +10,19 @@ export default function ProjectCard({ project }: { project: Project }) {
     const date = timestamp.toDate();
     return format(date, "MMM dd");
   }
-  console.log(project);
 
   return (
-    <div className="flex flex-col gap-3 h-64 rounded-xl bg-white p-4 text-neutral-700 shadow-lg border-2 border-neutral-100">
+    <div className="flex flex-col gap-3 h-72 rounded-xl bg-white p-4 text-neutral-700 shadow-lg border-2 border-neutral-100">
       <Link
-        to={`/projects/${project.id}`}
+        to={`/projects/${project.projectId}`}
         className="h-1/2 w-full rounded-xl"
         style={bgGradient}
       ></Link>
       <div className="flex flex-col">
-        <Link to={`/projects/${project.id}`}>
+        <Link to={`/projects/${project.projectId}`}>
           <h2 className="text-lg font-semibold">{project.title}</h2>
         </Link>
-        <span className="text-sm text-neutral-500">{formatTimestamp(project.dueDate)}</span>
+        <span className="text-sm text-neutral-500">{formatTimestamp(project.lastModified)}</span>
       </div>
     </div>
   );

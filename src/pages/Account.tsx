@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useUser from "../hooks/useUser";
-import { auth } from "../context/FirebaseProvider";
+import useUsers from "../hooks/useUsers";
 import { signOut } from "firebase/auth";
 import Button from "../components/ui/Button";
 import { CheckCircle } from "@phosphor-icons/react";
@@ -14,7 +13,9 @@ export default function Account() {
     data: userData,
     isLoading,
     error,
-  } = userId ? useUser(userId) : { data: null, isLoading: false, error: null };
+  } = userId ? useUsers([userId]) : { data: null, isLoading: false, error: null };
+
+  const [user] = userData || [];
 
   const handleLogOut = async () => {
     try {
@@ -36,7 +37,7 @@ export default function Account() {
 
   return (
     <div>
-      <h1>Account: {userData.name}</h1>
+      <h1>Account: {user.name}</h1>
       <div className="flex items-center gap-4">
         <span>Email:</span>
         {auth?.currentUser?.emailVerified ? (
@@ -49,10 +50,10 @@ export default function Account() {
             Not verified
           </span>
         )}
-        <span>{userData.email}</span>
+        <span>{user.email}</span>
       </div>
 
-      <img src={userData.photoURL} alt="Profile" />
+      <img src={user.photoURL} alt="Profile" />
       <Button onClick={handleLogOut}>Log Out</Button>
     </div>
   );
