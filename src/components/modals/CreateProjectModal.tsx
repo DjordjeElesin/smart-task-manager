@@ -20,7 +20,6 @@ export default function CreateProjectModal({
 }: {
   toggleModal: (event: any) => void;
 }) {
-  const navigate = useNavigate();
   const { auth, firestoredb } = useFirebase();
   const initalFormData: Project = {
     projectId: "",
@@ -79,7 +78,8 @@ export default function CreateProjectModal({
       const newDocRef = doc(projectRef);
 
       await setDoc(newDocRef, { ...formData, projectId: newDocRef.id });
-      navigate(`/projects/${newDocRef.id}`, { replace: true });
+      toast.success(`Project '${formData.title}' successfully created!`)
+      toggleModal(null)
     } catch (error) {
       console.error(error);
       toast.error("Unexpected error occurred. Please try again...");
@@ -128,7 +128,7 @@ export default function CreateProjectModal({
         />
       </div>
       <div className="flex gap-4">
-        <Button variant="secondary" onClick={toggleModal}>
+        <Button variant="secondary" onClick={() => toggleModal(null)}>
           Cancel
         </Button>
         <Button onClick={handleSave}>
