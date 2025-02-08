@@ -1,5 +1,5 @@
-import TestimonyCard from "../ui/TestimonyCard";
-import { testimonies } from "../../lib/utils/LandingPageHelper";
+import TestimonyCard from "../../ui/TestimonyCard";
+import { testimonies } from "../../../lib/utils/LandingPageHelper";
 
 export default function Testimonials() {
   const randomTestimony = Math.floor(Math.random() * testimonies.length);

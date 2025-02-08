@@ -7,11 +7,12 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 //firebase
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import useFirebase from "../hooks/useFirebase";
 //toast
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import { LoadingDots } from "../components/ui/LoadingDots";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 type LoginDataType = {
   email: string;
@@ -37,7 +38,7 @@ export default function Login() {
   const [loginErrors, setLoginErrors] =
     useState<LoginErrorsType>(initialLoginData);
 
-  const { auth, googleProvider } = useFirebase();
+  const { auth, googleProvider, firestoredb } = useFirebase();
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -101,26 +102,43 @@ export default function Login() {
       );
       navigation("/dashboard", { replace: true });
     } catch (error: any) {
-      if(error.code === "auth/invalid-credential"){
-        setLoginErrors(prev => ({...prev, password: "Wrong password"}))
-      }
-      else{
-        toast.error("Unexpected error occurred. Please try again...")
+      if (error.code === "auth/invalid-credential") {
+        setLoginErrors((prev) => ({ ...prev, password: "Wrong password" }));
+      } else {
+        toast.error("Unexpected error occurred. Please try again...");
       }
       console.error(error.code);
-    }
-    finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const userCredentials = await signInWithPopup(auth, googleProvider);
+      const user = userCredentials.user;
+      const userDoc = await getDoc(doc(firestoredb, "users", user.uid));
+
+
+      const avatarURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        user.displayName || "User"
+      )}&background=random`;
+
+
+      if (!userDoc.exists()) {
+        setDoc(doc(firestoredb, "users", user.uid), {
+          userId: user.uid,
+          name: user.displayName || "User",
+          email: user.email,
+          photoURL: avatarURL,
+          createdAt: new Date(),
+        });
+      }
+
       navigation("/dashboard", { replace: true });
     } catch (error) {
-      console.error(error)
-      toast.error("Unexpected error occurred. Please try again...")
+      console.error(error);
+      toast.error("Unexpected login error. Please try again...");
     }
   };
 
@@ -129,12 +147,18 @@ export default function Login() {
       <div className="form flex flex-col gap-6 w-full md:shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.1)] rounded-3xl md:w-[350px] p-6">
         <div className="flex flex-col items-center gap-4">
           <Link className="h-14" to="/">
-            <img src="logos/logoDefault.svg" className="h-full object-contain" />
+            <img
+              src="logos/logoDefault.svg"
+              className="h-full object-contain"
+            />
           </Link>
           <h1 className="text-3xl font-bold text-neutral-800">Welcome Back</h1>
           <p>
             Don't have an account?
-            <Link to="/signup" className="ml-1 text-primary-600 font-semibold cursor-pointer transition-all duration-300 hover:text-primary-400">
+            <Link
+              to="/signup"
+              className="ml-1 text-primary-600 font-semibold cursor-pointer transition-all duration-300 hover:text-primary-400"
+            >
               Sing up
             </Link>
           </p>
@@ -176,9 +200,7 @@ export default function Login() {
               <div className="h-6">
                 <img src="googleIcon.svg" className="h-full object-contain" />
               </div>
-              <span>
-                Sign in with Google
-              </span>
+              <span>Sign in with Google</span>
             </div>
           </Button>
         </div>

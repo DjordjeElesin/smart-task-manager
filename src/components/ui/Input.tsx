@@ -30,7 +30,7 @@ export default function Input({
         )}
         <input
           className={mergeClassNames(
-            "rounded-3xl border-2 border-neutral-300 bg-primary-50 drop-shadow-md w-full outline-none px-4 text-neutral-900 placeholder:text-neutral-300 focus:ring-2 focus:ring-neutral-600/20",
+            "rounded-3xl border-2 border-neutral-200 bg-primary-50 drop-shadow-md w-full outline-none px-4 text-neutral-800 placeholder:text-neutral-300 focus:ring-1 focus:ring-neutral-600/20",
             {
               "h-9": size === "sm",
               "h-12": size === "md",

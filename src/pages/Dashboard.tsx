@@ -1,37 +1,51 @@
-import { signOut } from "firebase/auth";
-import Button from "../components/ui/Button";
+//hooks
 import useFirebase from "../hooks/useFirebase";
-import { useNavigate } from "react-router-dom";
+import useProjects from "../hooks/useProjects";
+import { useState } from "react";
+import useTasks from "../hooks/useTasks";
+//components
+import CreateProjectModal from "../components/modals/CreateProjectModal";
+import Modal from "../components/structure/Modal";
+import ActiveProjects from "../components/pageComponents/dashboard/ActiveProjects";
+import RecentProjects from "../components/pageComponents/dashboard/RecentProjects";
+import TaskPieChart from "../components/pageComponents/dashboard/TaskPieChart";
+import TasksToComplete from "../components/pageComponents/dashboard/TasksToComplete";
+import PriorityTasks from "../components/pageComponents/dashboard/PriorityTasks";
+import { AnimatePresence } from "motion/react";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const { auth } = useFirebase();
+  const userId = auth.currentUser?.uid;
+  //data
+  const { data: projectsData } = useProjects(userId);
+  const { data: tasksData } = useTasks(userId);
+  //state
+  const [modal, setModal] = useState<string | null>(null);
 
-  const handleLogOut = async () => {
-    try {
-      await signOut(auth);
-      navigate("/", { replace: true });
-    } catch (error) {}
+  const handleModal = (type: string | null) => {
+    setModal(type);
   };
 
-  const isEmailVerified = auth?.currentUser?.emailVerified;
-  console.log(auth?.currentUser);
-
   return (
-    <div>
-      <Button onClick={handleLogOut}>Log out</Button>
-      <p>
-        Your email {isEmailVerified ? "is verified" : "has not been verified"}
-      </p>
-      {auth?.currentUser && (
-        <img
-          src={
-            auth.currentUser.photoURL ||
-            "https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
-          }
-          alt="Profile Picture"
-        />
-      )}
-    </div>
+    <section className="flex flex-col gap-4 pt-5">
+      <section className="grid grid-cols-2 grid-rows-2 gap-2 w-full">
+        <TaskPieChart />
+        <ActiveProjects projectsData={projectsData} />
+        <TasksToComplete tasks={tasksData} />
+      </section>
+      <section>
+        <RecentProjects projectsData={projectsData} handleModal={handleModal} />
+      </section>
+      <section>
+        <PriorityTasks />
+      </section>
+      <AnimatePresence>
+        {modal && (
+          <Modal toggleModal={() => handleModal(null)}>
+            {modal && <CreateProjectModal toggleModal={handleModal} />}
+          </Modal>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

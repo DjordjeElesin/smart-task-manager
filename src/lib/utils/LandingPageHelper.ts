@@ -4,7 +4,7 @@ import {
   LineSegments,
   ListChecks,
 } from "@phosphor-icons/react";
-import { FeatureType, PlanFeaturesType, PricingPlanType, TestimonyType } from "../types/LandingPageTypes";
+import { FeatureType, PlanFeaturesType, PricingPlanType, TestimonyType } from "../types/Types";
 
 export const testimonies: TestimonyType[] = [
   {

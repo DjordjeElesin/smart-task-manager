@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { aboutMeTxt } from "../../lib/utils/LandingPageHelper";
+import { aboutMeTxt } from "../../../lib/utils/LandingPageHelper";
 
 export default function About() {
   return (

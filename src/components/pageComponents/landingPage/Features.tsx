@@ -1,12 +1,12 @@
 import { FeatureCard } from "./FeatureCard";
-import { features } from "../../lib/utils/LandingPageHelper";
-import Button from "../ui/Button";
+import { features } from "../../../lib/utils/LandingPageHelper";
+import Button from "../../ui/Button";
 import { Link } from "react-router-dom";
 
 export default function Features({
   featureRef,
 }: {
-  featureRef: React.RefObject<HTMLElement | null>;
+  featureRef: React.RefObject<HTMLElement>;
 }) {
   return (
     <section 

@@ -11,10 +11,9 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithPopup,
-  validatePassword,
 } from "firebase/auth";
 import useFirebase from "../hooks/useFirebase";
-import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
+import { collection, getDoc, doc, setDoc } from "firebase/firestore";
 //toast
 import { toast } from "react-toastify";
 import { LoadingDots } from "../components/ui/LoadingDots";
@@ -23,17 +22,20 @@ import { checkPassword } from "../lib/utils/SignUpHelper";
 //users collection
 
 type SignUpDataType = {
+  fullName: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 type SignUpErrorsType = {
+  fullName?: string;
   email?: string;
   password?: string;
   confirmPassword?: string;
 };
 
 const initialSignUpData = {
+  fullName: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -51,7 +53,6 @@ export default function SignUp() {
     useState<SignUpErrorsType>(initialSignUpData);
 
   const { auth, googleProvider, firestoredb } = useFirebase();
-  const usersCollectionRef = collection(firestoredb, "users");
 
   const navigation = useNavigate();
 
@@ -90,6 +91,9 @@ export default function SignUp() {
     let newErrors: SignUpErrorsType = {};
     const emailRegex = /^(?!.*\s)(?=.*@)(?=.*\.)/;
 
+    if (!signUpData.fullName) {
+      newErrors.fullName = "Name is required";
+    }
     if (!signUpData.email) {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(signUpData.email)) {
@@ -124,13 +128,17 @@ export default function SignUp() {
         signUpData.password
       );
       const user = userCredentials.user;
+
+      const avatarURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        signUpData.fullName
+      )}&background=random`;
+
       await setDoc(doc(firestoredb, "users", user.uid), {
         userId: user.uid,
-        name: user.displayName || "User",
+        name: signUpData.fullName,
         email: user.email,
-        photoURL: user.photoURL || "/empty-profile.png",
+        photoURL: avatarURL,
         createdAt: new Date(),
-        emailVerified: user.emailVerified,
       });
       await sendEmailVerification(user);
       navigation("/dashboard", { replace: true });
@@ -153,7 +161,7 @@ export default function SignUp() {
           password: "Password is too weak",
         }));
       } else {
-        console.log(error.code);
+        console.error(error.code);
       }
     } finally {
       setIsLoading(false);
@@ -166,14 +174,17 @@ export default function SignUp() {
       const user = userCredentials.user;
       const userDoc = await getDoc(doc(firestoredb, "users", user.uid));
 
+      const avatarURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        user.displayName || "User"
+      )}&background=random`;
+
       if (!userDoc.exists()) {
         await setDoc(doc(firestoredb, "users", user.uid), {
           userId: user.uid,
           name: user.displayName || "User",
           email: user.email,
-          photoURL: user.photoURL || "/empty-profile.png",
+          photoURL: avatarURL,
           createdAt: new Date(),
-          emailVerified: user.emailVerified,
         });
       }
       navigation("/dashboard", { replace: true });
@@ -208,6 +219,20 @@ export default function SignUp() {
         </div>
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-full flex flex-col gap-1 items-start">
+                <label className="text-sm text-neutral-500">First Name</label>
+                <Input
+                  placeholder="Full Name"
+                  className="drop-shadow-none"
+                  value={signUpData.fullName}
+                  name="fullName"
+                  onChange={handleChangeInputs}
+                  isInvalid={!!signUpErrors.fullName}
+                  labelText={signUpErrors.fullName}
+                />
+              </div>
+            </div>
             <div className="w-full flex flex-col gap-1 items-start">
               <label className="text-sm text-neutral-500">Email</label>
               <Input

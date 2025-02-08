@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import About from "../components/landingPage/About";
-import Features from "../components/landingPage/Features";
-import Header from "../components/landingPage/Header";
-import Testimonials from "../components/landingPage/Testimonials";
-import Pricing from "../components/landingPage/Pricing";
+import About from "../components/pageComponents/landingPage/About";
+import Features from "../components/pageComponents/landingPage/Features";
+import Header from "../components/pageComponents/landingPage/Header";
+import Testimonials from "../components/pageComponents/landingPage/Testimonials";
+import Pricing from "../components/pageComponents/landingPage/Pricing";
 import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { Crown } from "@phosphor-icons/react";

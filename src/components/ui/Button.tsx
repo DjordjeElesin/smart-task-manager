@@ -33,7 +33,7 @@ export default function Button({
             variant === "primary",
           "bg-gradient-to-br from-neutral-700 to-neutral-900 border-t-2 border-neutral-600 before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300 before:bg-gradient-to-br before:from-neutral-600 before:to-neutral-800 hover:before:opacity-100 hover:shadow-lg hover:shadow-neutral-800/50 focus:ring-4 focus:ring-neutral-500/50":
             variant === "secondary",
-          "bg-neutral-100/10 backdrop-blur-sm border-2 border-primary-700 text-primary-700 hover:shadow-xl hover:shadow-primary-600/40 hover:text-neutral-50 hover:bg-primary-700  focus:ring-4 focus:ring-primary-800/30":
+          "bg-neutral-100/10 backdrop-blur-sm border-2 border-primary-600 text-primary-600 hover:shadow-xl hover:shadow-primary-600/40 hover:text-neutral-50 hover:bg-primary-700  focus:ring-4 focus:ring-primary-800/30":
             variant === "outline",
           "bg-neutral-100/10 backdrop-blur-sm text-primary-800 transition-colors hover:bg-primary-200 focus:bg-primary-100":
             variant === "link",

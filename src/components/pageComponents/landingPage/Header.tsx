@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../ui/Button";
+import Button from "../../ui/Button";
 
 export default function Header({elementRef}: {elementRef: React.RefObject<HTMLElement | null>}) {
 
@@ -10,7 +10,7 @@ export default function Header({elementRef}: {elementRef: React.RefObject<HTMLEl
   }
 
   return (
-    <section id="home" className="w-full pt-24 pb-16 px-5 text-center text-neutral-800 flex flex-col items-center gap-10 relative ">
+    <header id="home" className="w-full pt-24 pb-16 px-5 text-center text-neutral-800 flex flex-col items-center gap-10 relative ">
       <div
         className="absolute w-full aspect-square  bottom-0 left-1/2 -translate-x-1/2"
         style={{
@@ -42,6 +42,6 @@ export default function Header({elementRef}: {elementRef: React.RefObject<HTMLEl
           </Button>
         </div>
       </div>
-    </section>
+    </header>
   );
 }

@@ -1,4 +1,4 @@
-import { FeatureType } from "../../lib/types/LandingPageTypes";
+import { FeatureType } from "../../../lib/types/Types";
 
 type FeaturePropType = {
   feature: FeatureType;
