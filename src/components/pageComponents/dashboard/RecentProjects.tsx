@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 import { Project } from "../../../lib/types/Types";
 import ProjectCard from "../../structure/ProjectCard";
+import { Clock } from "@phosphor-icons/react/dist/ssr";
 
 export default function RecentProjects({
   projectsData,
@@ -11,7 +12,6 @@ export default function RecentProjects({
   projectsData: Project[] | null | undefined;
   handleModal: (event: any) => void;
 }) {
-
   const sortedProjectsByTimestamp = projectsData?.sort((a, b) => {
     return b.lastModified.toMillis() - a.lastModified.toMillis();
   });
@@ -19,9 +19,10 @@ export default function RecentProjects({
   return (
     <div className="flex flex-col gap-4 bg-white p-4 rounded-xl border-2 border-primary-100/70">
       <div className="flex items-center w-full justify-between ">
-        <h1 className="text-xl text-neutral-700 font-semibold flex gap-2 items-center">
-          Recent Projects
-        </h1>
+        <div className=" text-neutral-700 flex gap-2 items-center">
+          <Clock size={25} weight="bold" />
+          <h1 className="text-xl font-semibold ">Recent Projects</h1>
+        </div>
         <Link to="/projects">
           <Button
             variant="link"
@@ -33,11 +34,13 @@ export default function RecentProjects({
         </Link>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,250px))] gap-4 w-full px-4 py-6 rounded-xl">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 w-full px-4 py-6 rounded-xl">
         {sortedProjectsByTimestamp ? (
-          sortedProjectsByTimestamp.slice(0,3).map((project) => (
-            <ProjectCard project={project} key={project.title}/>
-          ))
+          sortedProjectsByTimestamp
+            .slice(0, 3)
+            .map((project) => (
+              <ProjectCard project={project} key={project.title} />
+            ))
         ) : (
           <div className="h-72 rounded-lg bg-primary-100 text-primary-700 "></div>
         )}

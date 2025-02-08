@@ -30,7 +30,7 @@ export default function Navbar() {
   );
 
   return (
-    <div className="fixed top-0 left-1/2 -translate-x-1/2 z-50 pt-4">
+    <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-50 pt-4">
       <div className="flex items-center gap-3 bg-primary-50 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
         <Link to="/" className="h-9 md:h-10 w-9 md:w-10 md:mr-5">
           <img src="logos/logoCircle.svg" className="h-full w-full" />
@@ -74,6 +74,6 @@ export default function Navbar() {
           <Button className="h-9 md:h-10 text-sm">Sign In</Button>
         </Link>
       </div>
-    </div>
+    </nav>
   );
 }

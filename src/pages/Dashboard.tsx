@@ -2,35 +2,32 @@
 import useFirebase from "../hooks/useFirebase";
 import useProjects from "../hooks/useProjects";
 import { useState } from "react";
+import useTasks from "../hooks/useTasks";
 //components
 import CreateProjectModal from "../components/modals/CreateProjectModal";
-import CreateTaskModal from "../components/modals/CreateTaskModal";
 import Modal from "../components/structure/Modal";
 import ActiveProjects from "../components/pageComponents/dashboard/ActiveProjects";
 import RecentProjects from "../components/pageComponents/dashboard/RecentProjects";
 import TaskPieChart from "../components/pageComponents/dashboard/TaskPieChart";
 import TasksToComplete from "../components/pageComponents/dashboard/TasksToComplete";
+import PriorityTasks from "../components/pageComponents/dashboard/PriorityTasks";
 import { AnimatePresence } from "motion/react";
-import useUserTasks from "../hooks/useUserTasks";
 
 export default function Dashboard() {
   const { auth } = useFirebase();
+  const userId = auth.currentUser?.uid;
   //data
-  const { data: projectsData } = auth.currentUser
-    ? useProjects(auth.currentUser.uid)
-    : { data: null };
-  const { data: tasksData } = auth.currentUser
-    ? useUserTasks(auth.currentUser.uid)
-    : { data: null };
+  const { data: projectsData } = useProjects(userId);
+  const { data: tasksData } = useTasks(userId);
   //state
-  const [modalType, setModalType] = useState<string | null>(null);
+  const [modal, setModal] = useState<string | null>(null);
 
   const handleModal = (type: string | null) => {
-    setModalType(type);
+    setModal(type);
   };
 
   return (
-    <section className="flex flex-col gap-4 ">
+    <section className="flex flex-col gap-4 pt-5">
       <section className="grid grid-cols-2 grid-rows-2 gap-2 w-full">
         <TaskPieChart />
         <ActiveProjects projectsData={projectsData} />
@@ -39,14 +36,13 @@ export default function Dashboard() {
       <section>
         <RecentProjects projectsData={projectsData} handleModal={handleModal} />
       </section>
+      <section>
+        <PriorityTasks />
+      </section>
       <AnimatePresence>
-        {modalType && (
+        {modal && (
           <Modal toggleModal={() => handleModal(null)}>
-            {modalType === "project" ? (
-              <CreateProjectModal toggleModal={handleModal}/>
-            ) : (
-              <CreateTaskModal />
-            )}
+            {modal && <CreateProjectModal toggleModal={handleModal} />}
           </Modal>
         )}
       </AnimatePresence>

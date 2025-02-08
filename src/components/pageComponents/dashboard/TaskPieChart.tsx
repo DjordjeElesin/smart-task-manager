@@ -1,17 +1,15 @@
 import { useMemo } from "react";
 import useFirebase from "../../../hooks/useFirebase";
-import useUserTasks from "../../../hooks/useUserTasks";
+import useTasks from "../../../hooks/useTasks";
 import { colors } from "../../../style/colors";
 import PieChart from "../../ui/PieChart";
 import Spinner from "../../ui/Spinner";
-import Button from "../../ui/Button";
 import { Plus } from "@phosphor-icons/react";
 
 export default function TaskPieChart() {
   const { auth } = useFirebase();
-  const { data: tasksData, isLoading } = auth.currentUser
-    ? useUserTasks(auth.currentUser.uid)
-    : { data: null, isLoading: false };
+  const userId = auth.currentUser?.uid
+  const { data: tasksData, isLoading } = useTasks(userId)
 
   const statusCounts = useMemo(() => {
     const initialStatusCounts = {

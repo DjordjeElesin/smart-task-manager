@@ -3,13 +3,19 @@ import useFirebase from "./useFirebase";
 import { Project } from "../lib/types/Types";
 import { useEffect, useState } from "react";
 
-export default function useProjects(userId: string) {
+export default function useProjects(userId: string | undefined) {
   const { firestoredb } = useFirebase();
   const [projectsData, setProjectsData] = useState<Project[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+
   useEffect(() => {
+    if (!userId) {
+      setProjectsData(null);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 

@@ -61,7 +61,7 @@ type Project = {
   status?: "active" | "completed" | "on hold";
 };
 
-type Priority = "Low" | "Medium" | "High";
+type Priority = "low" | "medium" | "high";
 
 type Comment = {
   commentId: string;
@@ -71,13 +71,15 @@ type Comment = {
 };
 
 type Task = {
-  assignedTo?: string[];
+  assignedTo?: Members;
   createdAt: Timestamp;
   createdBy: string;
   description: string;
   dueDate: Timestamp;
   priority: Priority;
-  projectId?: string;
+  projectId: string;
+  projectName: string;
+  color: string;
   status: "To do" | "In Progress" | "Done";
   title: string;
   comments?: Comment[];
@@ -101,4 +103,5 @@ export type {
   Project,
   Task,
   PieDataType,
+  Priority,
 };

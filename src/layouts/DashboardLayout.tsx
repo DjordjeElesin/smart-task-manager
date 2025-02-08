@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
-import DashboardNavbar from "../components/structure/DashboardNavbar";
+import DashboardSidebar from "../components/structure/DashboardSidebar";
 import { CheckSquareOffset, House, Suitcase } from "@phosphor-icons/react";
 import Footer from "../components/structure/Footer";
+import DashboardNavbar from "../components/structure/DashboardNavbar";
 
 const navItems = [
   { name: "Dashboard", path: "/dashboard", icon: House },
@@ -11,12 +12,15 @@ const navItems = [
 
 export default function DashboardLayout() {
   return (
-    <div className="w-full h-screen relative flex flex-col bg-primary-50 pt-20">
-      <DashboardNavbar navItems={navItems} />
-      <main className="p-8 pb-28 bg-primary-50">
-        <Outlet />
-      </main>
-      <Footer />
+    <div className="w-full min-h-screen relative flex bg-primary-50">
+      <DashboardSidebar navItems={navItems} />
+      <article className="flex flex-col w-full pl-24 md:pl-52 bg-primary-50">
+        <main className="p-8 pt-3 pb-28 bg-primary-50 flex flex-col relative">
+          <DashboardNavbar />
+          <Outlet />
+        </main>
+        <Footer />
+      </article>
     </div>
   );
 }

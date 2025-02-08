@@ -12,7 +12,7 @@ export default function ProjectCard({ project }: { project: Project }) {
   }
 
   return (
-    <div className="flex flex-col gap-3 h-72 rounded-xl bg-white p-4 text-neutral-700 shadow-lg border-2 border-neutral-100">
+    <div className="flex flex-col gap-3 h-72 rounded-xl bg-white p-4 text-neutral-700 shadow-lg border-2 w-full aspect-square border-neutral-100">
       <Link
         to={`/projects/${project.projectId}`}
         className="h-1/2 w-full rounded-xl"

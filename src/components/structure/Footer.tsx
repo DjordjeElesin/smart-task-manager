@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-50  h-28 flex items-center justify-center gap-11 border-t border-neutral-200 p-6 text-neutral-400">
+    <footer className="bg-primary-50  h-28 flex items-center justify-center gap-11 border-t-2 border-neutral-200/50 p-6 text-neutral-400">
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 items-center">
           <Copyright size={15}/>

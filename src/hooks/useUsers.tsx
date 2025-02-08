@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import useFirebase from "./useFirebase";
 import { User } from "../lib/types/Types";
 
-export default function useUsers(userIds: string[]) {
+export default function useUsers(userIds: string[] | undefined) {
   const { firestoredb } = useFirebase();
   return useQuery({
     queryKey: ["user", userIds],
@@ -18,6 +18,6 @@ export default function useUsers(userIds: string[]) {
       const usersSnapshop = await getDocs(q);
       return usersSnapshop.docs.map((doc) => ({ ...doc.data() as User}));
     },
-    enabled: userIds.length > 0 && Array.isArray(userIds),
+    enabled: !!userIds && userIds.length > 0 && Array.isArray(userIds),
   });
 }
