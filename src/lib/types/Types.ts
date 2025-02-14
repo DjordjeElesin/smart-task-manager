@@ -45,7 +45,7 @@ type PieDataType = {
   value: number;
 };
 
-type Members = {
+type MembersType = {
   [userId: string]: boolean;
 };
 
@@ -55,7 +55,7 @@ type Project = {
   description: string;
   createdAt: Timestamp;
   createdBy: string;
-  members: Members;
+  members: MembersType;
   lastModified: Timestamp;
   gradient: string;
   status?: "active" | "completed" | "on hold";
@@ -71,7 +71,7 @@ type Comment = {
 };
 
 type Task = {
-  assignedTo?: Members;
+  assignedTo?: MembersType;
   createdAt: Timestamp;
   createdBy: string;
   description: string;
@@ -100,6 +100,7 @@ export type {
   PricingPlanType,
   PlanFeaturesType,
   User,
+  MembersType,
   Project,
   Task,
   PieDataType,

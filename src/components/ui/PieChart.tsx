@@ -18,7 +18,7 @@ const PieChart = ({ data, padColors, customProperties }: PieChartProps) => (
     valueFormat=" >-.0%"
     cornerRadius={3}
     activeOuterRadiusOffset={10}
-    arcLinkLabelsOffset={-8}
+    arcLinkLabelsOffset={-13}
     arcLinkLabelsTextColor={colors.neutral[600]}
     arcLinkLabelsThickness={2}
     arcLinkLabelsColor={{ from: "color" }}
@@ -27,7 +27,7 @@ const PieChart = ({ data, padColors, customProperties }: PieChartProps) => (
     theme={{
       labels: {
         text: {
-          fontSize: 15,
+          fontSize: 12,
           fontWeight: 500,
         },
       },

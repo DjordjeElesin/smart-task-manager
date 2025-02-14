@@ -17,19 +17,11 @@ export default function Account() {
 
   const [user] = userData || [];
 
-  const handleLogOut = async () => {
-    try {
-      await signOut(auth);
-      navigate("/", { replace: true });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading user</div>;
   if (!userData) return <div>
-      <Button onClick={handleLogOut}>Log Out</Button>
 
   </div>;
 
@@ -54,7 +46,6 @@ export default function Account() {
       </div>
 
       <img src={user.photoURL} alt="Profile" />
-      <Button onClick={handleLogOut}>Log Out</Button>
     </div>
   );
 }

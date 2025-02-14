@@ -14,7 +14,7 @@ export default function DashboardLayout() {
   return (
     <div className="w-full min-h-screen relative flex bg-primary-50">
       <DashboardSidebar navItems={navItems} />
-      <article className="flex flex-col w-full pl-24 md:pl-52 bg-primary-50">
+      <article className="flex flex-col w-full pl-24 lg:pl-52 bg-primary-50">
         <main className="p-8 pt-3 pb-28 bg-primary-50 flex flex-col relative">
           <DashboardNavbar />
           <Outlet />

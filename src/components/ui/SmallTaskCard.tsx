@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { Task } from "../../lib/types/Types";
 import PriorityBadge from "./PriorityBadge";
 import useUsers from "../../hooks/useUsers";
+import UsersCircles from "./UsersCircles";
 
 export default function SmallTaskCard({ task }: { task: Task }) {
   const { data: assignedTos } = useUsers(Object.keys(task.assignedTo || {}));
@@ -24,22 +25,7 @@ export default function SmallTaskCard({ task }: { task: Task }) {
       </div>
 
       <div className="flex flex-col gap-1 items-end">
-        <div className="flex ">
-          {assignedTos?.map((user, index) => (
-            <span
-            key={user.userId}
-            className="w-6 h-6 rounded-full -mr-1 overflow-hidden"
-              style={{ zIndex: assignedTos.length + index }}
-            >
-
-              <img
-                src={user.photoURL}
-                alt={`profile image of ${user.name}`}
-                className="w-full h-full object-cover"
-              />
-            </span>
-          ))}
-        </div>
+        <UsersCircles users={assignedTos}/>
         <span className="text-xs text-neutral-400">{task.projectName}</span>
       </div>
     </div>

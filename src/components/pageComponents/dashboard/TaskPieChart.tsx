@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useFirebase from "../../../hooks/useFirebase";
 import useTasks from "../../../hooks/useTasks";
 import { colors } from "../../../style/colors";
@@ -8,8 +8,24 @@ import { Plus } from "@phosphor-icons/react";
 
 export default function TaskPieChart() {
   const { auth } = useFirebase();
-  const userId = auth.currentUser?.uid
-  const { data: tasksData, isLoading } = useTasks(userId)
+  const userId = auth.currentUser?.uid;
+  const { data: tasksData, isLoading } = useTasks(userId);
+  const [showArcLinkLables, setShowArcLinkLabels] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1120) {
+        setShowArcLinkLabels(true);
+      } else {
+        setShowArcLinkLabels(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+
+  }, []);
 
   const statusCounts = useMemo(() => {
     const initialStatusCounts = {
@@ -55,6 +71,7 @@ export default function TaskPieChart() {
             ]}
             customProperties={{
               margin: { bottom: 50 },
+              enableArcLinkLabels: showArcLinkLables,
               legends: [
                 {
                   anchor: "bottom",
@@ -73,9 +90,11 @@ export default function TaskPieChart() {
         ) : (
           <div className="h-60 flex flex-col items-center justify-center gap-6 p-6 w-full rounded-xl bg-primary-100 text-primary-700/60 text-center">
             <span className=" font-semibold">No tasks found</span>
-            <span className="text-sm">It seems there are no tasks created yet</span>
+            <span className="text-sm">
+              It seems there are no tasks created yet
+            </span>
             <span className="border-2 border-primary-700/50 rounded-full p-3">
-              <Plus size={30}/>
+              <Plus size={30} />
             </span>
           </div>
         )}

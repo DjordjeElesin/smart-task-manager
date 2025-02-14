@@ -14,7 +14,7 @@ export default function DashboardNavbar() {
   const location = useLocation();
   const { auth } = useFirebase();
   const userIds = auth?.currentUser?.uid ? [auth.currentUser.uid] : [];
-  const { data: userData } = useUsers(userIds);
+  const { data: userData, isLoading } = useUsers(userIds);
   const user = userData ? userData[0] : null;
 
   const getIcon = (path: string): IconComponent | undefined => {
@@ -31,7 +31,7 @@ export default function DashboardNavbar() {
   };
 
   const getTitleByPath = (path: string) => {
-    const mainSegment = path.split("/")[1]
+    const mainSegment = path.split("/")[1];
     return mainSegment[0].toUpperCase() + mainSegment.slice(1);
   };
 
@@ -48,7 +48,7 @@ export default function DashboardNavbar() {
         className="overflow-hidden flex gap-2 items-center cursor-pointer rounded-xl "
       >
         <img
-          src={user?.photoURL}
+          src={isLoading ? "/empty-profile.png" : user?.photoURL}
           alt="user account"
           className="rounded-full object-cover h-7 w-7"
         />

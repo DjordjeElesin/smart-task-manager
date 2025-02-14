@@ -29,9 +29,13 @@ const dropIn = {
 export default function Members({
   onMembersChange,
   members,
+  sizePx = 24,
+  modalLeft = false,
 }: {
   onMembersChange: (member: string) => void;
   members: string[];
+  sizePx?: number;
+  modalLeft?: boolean;
 }) {
   //members
   const { data: usersData } = useUsers(members);
@@ -48,6 +52,12 @@ export default function Members({
   const [searchQuery, setSearchQuery] = useState("");
   const { data: searchData } = useSearchUser(searchQuery);
   const [searchResults, setSearchResults] = useState(searchData || []);
+
+  useEffect(() => {
+    if (usersData) {
+      setDisplayedMembers(usersData);
+    }
+  }, [usersData]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -68,6 +78,9 @@ export default function Members({
       membersCopy.splice(index, 1);
       return membersCopy;
     });
+    setSearchResults((prev) =>
+      prev.filter((user) => user.userId !== user.userId)
+    );
     setInputValue("");
   };
 
@@ -93,19 +106,32 @@ export default function Members({
   return (
     <>
       <div className="relative flex gap-1 h-fit">
-        {displayedMembers?.map((user) => (
-          <div
-            className="h-9 w-9 rounded-full overflow-hidden"
+        {displayedMembers?.map((user, index) => (
+          <span
             key={user.userId}
+            className="rounded-full -mr-2 overflow-hidden"
+            style={{
+              width: `${sizePx}px`,
+              height: `${sizePx}px`,
+              zIndex: displayedMembers.length + index,
+            }}
           >
-            <img src={user.photoURL} className="w-full h-full object-cover" />
-          </div>
+            <img
+              src={user.photoURL}
+              alt={`profile image of ${user.name}`}
+              className="w-full h-full object-cover"
+            />
+          </span>
         ))}
         <button
           className={mergeClassNames(
-            "h-9 w-9 rounded-full flex items-center justify-center text-primary-700 bg-primary-200 hover:opacity-75 transition-all duration-300",
+            "ml-2 rounded-full flex items-center justify-center text-primary-700 bg-primary-200 hover:opacity-75 transition-all duration-300",
             modal && "ring-2 ring-primary-400"
           )}
+          style={{
+            width: `${sizePx}px`,
+            height: `${sizePx}px`,
+          }}
           onClick={() => setModal(!modal)}
         >
           <Plus size={20} weight="bold" />
@@ -117,7 +143,10 @@ export default function Members({
               animate="visible"
               exit="hidden"
               variants={dropIn}
-              className="absolute z-20 top-full  mt-1 flex flex-col gap-1 bg-white shadow-lg border-2 border-neutral-200 p-4 pb-7 rounded-xl"
+              className={mergeClassNames(
+                "absolute z-20 top-full text-neutral-500 mt-1 flex flex-col gap-1 bg-white shadow-lg border-2 border-neutral-200 p-4 pb-7 rounded-xl",
+                modalLeft && "right-0"
+              )}
             >
               <div className="flex items-center justify-between mb-4">
                 <label className="text-md">Members</label>

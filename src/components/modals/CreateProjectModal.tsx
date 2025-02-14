@@ -114,6 +114,7 @@ export default function CreateProjectModal({
         <Members
           onMembersChange={onMembersChange}
           members={Object.keys(formData.members)}
+          sizePx={30}
         />
       </div>
 
